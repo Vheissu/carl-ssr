@@ -1,0 +1,14 @@
+{
+  "name": "carl/ssr",
+  "description": "PHP renderer for Carl portable web component manifests.",
+  "type": "library",
+  "license": "MIT",
+  "autoload": {
+    "files": [
+      "Carl.php"
+    ]
+  },
+  "require": {
+    "php": ">=8.1"
+  }
+}

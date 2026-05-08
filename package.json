@@ -1,0 +1,45 @@
+{
+  "name": "carl-ssr",
+  "version": "0.1.0",
+  "description": "SSR primitives for standards-based web components, with portable manifests for PHP rendering.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist",
+    "php",
+    "examples",
+    "README.md"
+  ],
+  "engines": {
+    "node": "^20.19.0 || >=22.12.0"
+  },
+  "scripts": {
+    "build": "vite build && tsc -p tsconfig.build.json --emitDeclarationOnly",
+    "check": "tsc --noEmit",
+    "test": "vitest run",
+    "verify": "npm run check && npm run test && npm run build && php examples/php-render.php"
+  },
+  "keywords": [
+    "web-components",
+    "ssr",
+    "declarative-shadow-dom",
+    "php",
+    "typescript"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "latest",
+    "typescript": "6.0.3",
+    "vite": "8.0.11",
+    "vitest": "4.1.5"
+  }
+}

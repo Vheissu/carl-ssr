@@ -1,0 +1,19 @@
+{
+  "format": "carl.manifest",
+  "version": 1,
+  "components": [
+    {
+      "tagName": "carl-greeting",
+      "shadow": {
+        "mode": "open"
+      },
+      "styles": [
+        ":host{display:block;font-family:system-ui,sans-serif}.name{font-weight:700}"
+      ],
+      "defaults": {
+        "name": "friend"
+      },
+      "template": "<p>Hello, <span class=\"name\">{{ name }}</span>.</p><slot></slot>"
+    }
+  ]
+}
