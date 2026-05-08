@@ -1,0 +1,38 @@
+{
+  "format": "carl.manifest",
+  "version": 1,
+  "components": [
+    {
+      "tagName": "carl-greeting",
+      "shadow": {
+        "mode": "open"
+      },
+      "styles": [
+        ":host{display:block}.name{font-weight:700}"
+      ],
+      "defaults": {
+        "name": "friend"
+      },
+      "template": "<p>Hello, <span class=\"name\">{{ name }}</span>.</p><slot></slot>"
+    },
+    {
+      "tagName": "carl-badge",
+      "shadow": false,
+      "defaults": {
+        "label": "New"
+      },
+      "template": "<span class=\"badge\">{{ label }}</span>"
+    },
+    {
+      "tagName": "carl-action-panel",
+      "shadow": {
+        "mode": "closed",
+        "delegatesFocus": true
+      },
+      "styles": [
+        ":host{display:block}header{font-weight:700}"
+      ],
+      "template": "<section><header>{{ title }}</header><main><slot></slot></main><footer><slot name=\"actions\"></slot></footer></section>"
+    }
+  ]
+}

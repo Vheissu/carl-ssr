@@ -88,7 +88,7 @@ Supported placeholders:
 
 ## PHP Renderer
 
-The PHP renderer consumes the same `carl.manifest` JSON:
+The PHP renderer lives in `php/` and consumes the same `carl.manifest` JSON as Node's portable renderer. It can be loaded directly:
 
 ```php
 <?php
@@ -108,7 +108,45 @@ echo $renderer->render('carl-greeting', [
 ]);
 ```
 
+Or through Composer:
+
+```json
+{
+  "repositories": [
+    {
+      "type": "path",
+      "url": "./php"
+    }
+  ],
+  "require": {
+    "carl/ssr": "*"
+  }
+}
+```
+
+```php
+<?php
+
+require __DIR__ . '/vendor/autoload.php';
+
+use Carl\Renderer;
+
+$renderer = Renderer::fromManifestFile(__DIR__ . '/card.manifest.json');
+echo $renderer->render('carl-greeting', ['props' => ['name' => 'Dwayne']]);
+```
+
 PHP strings are escaped by default. Use `Carl\Html::raw()` only for trusted light DOM.
+
+The PHP runtime currently exposes:
+
+- `Renderer::fromManifestFile($path)`
+- `Renderer::fromManifestJson($json)`
+- `Renderer::fromManifestArray($manifest)`
+- `$renderer->render($tagName, $options)`
+- `$renderer->has($tagName)`
+- `$renderer->componentNames()`
+- `Renderer::renderTemplate($template, $props)`
+- `Html::raw($trustedMarkup)`
 
 ## API Surface
 
@@ -121,3 +159,15 @@ PHP strings are escaped by default. Use `Carl\Html::raw()` only for trusted ligh
 ## Current Scope
 
 This is a first working library slice. It handles safe HTML rendering, host attributes, styles, slots, Declarative Shadow DOM, and PHP-compatible manifests. Future work should add async rendering, streaming, hydration helpers, compiler integrations, and a broader manifest instruction set for conditionals and loops.
+
+## Verification
+
+```sh
+npm run check
+npm run check:php
+npm run test
+npm run test:php
+npm run build
+```
+
+`npm run verify` runs the full TypeScript, Vitest, PHP lint, PHP runtime tests, Vite build, and PHP example path.

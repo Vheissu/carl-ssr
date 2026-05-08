@@ -6,6 +6,7 @@ import {
   renderTemplate,
   unsafeHtml
 } from '../src';
+import { readFileSync } from 'node:fs';
 
 describe('portable component renderer', () => {
   it('renders templates with escaped placeholders', () => {
@@ -57,5 +58,35 @@ describe('portable component renderer', () => {
         }
       ]
     });
+  });
+
+  it('renders the shared PHP fixture from JavaScript', () => {
+    const manifest = JSON.parse(
+      readFileSync(new URL('./fixtures/portable.manifest.json', import.meta.url), 'utf8')
+    );
+    const greeting = manifest.components[0];
+    const actionPanel = manifest.components[2];
+
+    expect(
+      renderPortableComponent(greeting, {
+        props: { name: 'Dwayne & Carl' },
+        attrs: { 'data-runtime': 'node', hidden: false },
+        children: unsafeHtml('<p>Projected</p>')
+      })
+    ).toBe(
+      '<carl-greeting data-runtime="node"><template shadowrootmode="open"><style>:host{display:block}.name{font-weight:700}</style><p>Hello, <span class="name">Dwayne &amp; Carl</span>.</p><slot></slot></template><p>Projected</p></carl-greeting>'
+    );
+
+    expect(
+      renderPortableComponent(actionPanel, {
+        props: { title: 'Danger & recovery' },
+        children: unsafeHtml('<p>Body</p>'),
+        slots: {
+          actions: unsafeHtml('<button>Save</button>')
+        }
+      })
+    ).toBe(
+      '<carl-action-panel><template shadowrootmode="closed" shadowrootdelegatesfocus><style>:host{display:block}header{font-weight:700}</style><section><header>Danger &amp; recovery</header><main><slot></slot></main><footer><slot name="actions"></slot></footer></section></template><p>Body</p><span slot="actions"><button>Save</button></span></carl-action-panel>'
+    );
   });
 });

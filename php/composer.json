@@ -4,11 +4,14 @@
   "type": "library",
   "license": "MIT",
   "autoload": {
-    "files": [
-      "Carl.php"
-    ]
+    "psr-4": {
+      "Carl\\": "src/"
+    }
   },
   "require": {
     "php": ">=8.1"
+  },
+  "scripts": {
+    "test": "php tests/RendererTest.php"
   }
 }
